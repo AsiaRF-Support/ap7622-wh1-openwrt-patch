@@ -1,0 +1,9 @@
+1.01
+	Fix the issue that wizards apply the wrong architecture of the network on AP7622.
+	Fix the error about rtc synchronization after initializing on the web console.
+
+
+=============================================================
+1.00
+	First release of AP7622-WH1 platform for Morse Micro OpenWrt SDK.
+

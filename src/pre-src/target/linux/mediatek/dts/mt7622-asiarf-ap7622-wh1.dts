@@ -1,0 +1,107 @@
+/dts-v1/;
+
+#include "mt7622-rfb1-ubi.dts"
+
+/ {
+    model = "AsiaRF AP7622 Wi-Fi HaLow Expert Kit";
+	compatible = "asiarf,ap7622-wh1", "mediatek,mt7622";
+
+    aliases {
+        led-boot = &led_power;
+        led-failsafe = &led_power;
+        led-running = &led_power;
+        led-upgrade = &led_power;
+    };
+
+	// Necessary to power on mm6108.
+	mm610x_pwrseq: mm610x_pwrseq {
+		compatible = "mmc-pwrseq-simple";
+		reset-gpios = <&pio 97 GPIO_ACTIVE_LOW>;
+	};
+
+    gpio-keys {
+        compatible = "gpio-keys";
+
+		// Hint: Replace factory node for reset node.
+		/delete-node/ factory; // Free gpio0
+		reset {
+			label = "reset";
+			linux,code = <KEY_RESTART>;
+			gpios = <&pio 0 GPIO_ACTIVE_LOW>;
+		};
+	};
+
+	leds {
+		compatible = "gpio-leds";
+		status = "okay";
+
+		led_power: power {
+			label = "blue:power";
+			gpios = <&pio 101 GPIO_ACTIVE_HIGH>;
+		};
+
+		wlan {
+			label = "green:wlan";
+			gpios = <&pio 85 GPIO_ACTIVE_LOW>;
+            linux,default-trigger = "phy1tpt";
+		};
+	};
+};
+
+&rtc {
+    status = "disabled";
+
+    /* No externel RTC clock */
+};
+
+
+&pwm {
+    status = "disabled";
+};
+
+//Group		gpio	description
+//-----		------  ----------
+//WLED_N    #85		on board wifi led
+//PWM7		#101	power led
+
+&pio {
+	led_pins: led_pins {
+		gpio {
+			groups = "PWM7", "WLED_N";
+			function = "gpio";
+		};
+	};
+};
+
+&mmc1 {
+	keep-power-in-suspend;	// no power saving
+
+	cd-gpios;
+    cap-mmc-highspeed;
+    cap-sdio-irq;
+    non-removable;
+    disable-wp;
+	no-mmc;
+	no-sd;
+	enable-sdio-wakeup;
+	drv-type = <2>;
+	mmc-pwrseq = <&mm610x_pwrseq>;
+
+    #address-cells = <1>;
+    #size-cells = <0>;
+    mm6108_sdio: mm6108_sdio@0 {
+        compatible = "morse,mm610x";
+        reset-gpios = <&pio 97 GPIO_ACTIVE_HIGH>; // MM_RESET PIN from (GPIO 97)
+        power-gpios = <&pio 98 GPIO_ACTIVE_HIGH>, // MM_WAKE  PIN from (GPIO 98)
+					<&pio 99 GPIO_ACTIVE_HIGH>;	  // MM_BUSY  PIN from (GPIO 99)
+        status = "okay";
+		reg = <2>;
+        bus-width = <4>;
+    };
+};
+
+&wmac {
+	// Remove ePA/eLNA pinctrl for morse
+	/delete-property/ pinctrl-names;
+	/delete-property/ pinctrl-0;
+};

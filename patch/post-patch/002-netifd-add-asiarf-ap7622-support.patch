@@ -1,0 +1,35 @@
+diff -ruN a/feeds/morse/netifd-morse/etc/uci-defaults/99-bcf-defaults b/feeds/morse/netifd-morse/etc/uci-defaults/99-bcf-defaults
+--- a/feeds/morse/netifd-morse/etc/uci-defaults/99-bcf-defaults	2024-12-18 11:50:01.496443359 +0000
++++ b/feeds/morse/netifd-morse/etc/uci-defaults/99-bcf-defaults	2024-12-18 12:36:32.637750658 +0000
+@@ -30,6 +30,9 @@
+ 		morse,ekh04v4)
+ 			bcf=bcf_ekh04_v4.bin
+ 		;;
++		asiarf,ap7622-wh1)
++			bcf=bcf_mf10220.bin
++		;;
+ 	esac
+ 
+ 	[ -z "$bcf" ] && return 0
+diff -ruN a/feeds/morse/netifd-morse/lib/wifi/morse.sh b/feeds/morse/netifd-morse/lib/wifi/morse.sh
+--- a/feeds/morse/netifd-morse/lib/wifi/morse.sh	2024-12-18 11:50:01.496443359 +0000
++++ b/feeds/morse/netifd-morse/lib/wifi/morse.sh	2024-12-18 12:37:52.707052690 +0000
+@@ -101,6 +101,8 @@
+ 			set wireless.radio${devidx}.hwmode=11ah
+ 			set wireless.radio${devidx}.reconf=0
+ 			set wireless.radio${devidx}.disabled=1
++			set wireless.radio${devidx}.bandwidth=8
++			set wireless.radio${devidx}.beacon_int=100
+ 
+ 			set wireless.default_radio${devidx}=wifi-iface
+ 			set wireless.default_radio${devidx}.mode=ap
+@@ -128,6 +130,9 @@
+ 			morse,ekh04v4)
+ 				bcf=bcf_ekh04_v4.bin
+ 			;;
++			asiarf,ap7622-wh1)
++				bcf=bcf_mf10220.bin
++			;;
+ 		esac
+ 
+ 		[ -n "${bcf}" ] && uci -q set wireless.radio${devidx}.bcf="${bcf}"

@@ -1,0 +1,20 @@
+--- a/arch/arm64/boot/dts/mediatek/mt7622-rfb1.dts	2024-11-25 19:16:07.546517761 +0800
++++ b/arch/arm64/boot/dts/mediatek/mt7622-rfb1.dts	2024-11-26 18:06:41.958790018 +0800
+@@ -119,10 +119,14 @@
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 
+-		switch@0 {
++		switch@1f {
+ 			compatible = "mediatek,mt7531";
+-			reg = <0>;
+-			reset-gpios = <&pio 54 0>;
++			reg = <31>;
++			reset-gpios = <&pio 54 GPIO_ACTIVE_HIGH>;
++            #interrupt-cells = <1>;
++            interrupt-controller;
++            interrupt-parent = <&pio>;
++            interrupts = <53 IRQ_TYPE_LEVEL_HIGH>;
+ 
+ 			ports {
+ 				#address-cells = <1>;

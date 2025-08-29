@@ -1,0 +1,103 @@
+CONFIG_TARGET_mediatek=y
+CONFIG_TARGET_mediatek_mt7622=y
+CONFIG_TARGET_mediatek_mt7622_DEVICE_asiarf_ap7622-wh1=y
+CONFIG_PREINITOPT=y
+CONFIG_MORSE_BCF_DEVICE_ID="mf10220"
+CONFIG_MORSE_SDIO_ALIGNMENT=8
+CONFIG_TARGET_ROOTFS_INITRAMFS=n
+CONFIG_BUSYBOX_CONFIG_MDEV=y
+CONFIG_VERSION_MANUFACTURER="AsiaRF"
+CONFIG_VERSION_MANUFACTURER_URL="https://asiarf.com/"
+CONFIG_VERSION_DIST="AP7622-WH1"
+CONFIG_VERSION_NUMBER="v2.6.6-alpha1"
+CONFIG_VERSION_CODE=""
+CONFIG_VERSION_HWREV="v0"
+CONFIG_VERSION_PRODUCT="ARFHL"
+
+# Disable morse function here.
+CONFIG_PACKAGE_smart_manager=n
+CONFIG_PACKAGE_luci-app-morseguide=n
+CONFIG_PACKAGE_dpp-key-recovery=n
+CONFIG_PACKAGE_prplmesh=n
+CONFIG_PACKAGE_arp-scan-database=n
+CONFIG_PACKAGE_arp-scan=n
+CONFIG_PACKAGE_luci-app-morseupgrade=n
+
+# Mesh
+CONFIG_PACKAGE_morse_mesh11sd=y
+
+# USB support
+CONFIG_PACKAGE_kmod-usb-net-cdc-subset=y
+CONFIG_PACKAGE_kmod-usb-net-cdc-eem=y
+CONFIG_PACKAGE_kmod-usb-net-cdc-mbim=y
+CONFIG_PACKAGE_kmod-usb-net-huawei-cdc-ncm=y
+CONFIG_PACKAGE_kmod-usb-net-qmi-wwan=y
+CONFIG_PACKAGE_kmod-usb-net-rndis=y
+CONFIG_PACKAGE_kmod-usb-ohci=y
+CONFIG_PACKAGE_kmod-usb-ohci-pci=y
+CONFIG_PACKAGE_kmod-usb-serial-option=y
+CONFIG_PACKAGE_kmod-usb-uhci=y
+CONFIG_PACKAGE_kmod-usb-wdm=y
+CONFIG_PACKAGE_kmod-usb2=y
+CONFIG_PACKAGE_kmod-usb2-pci=y
+
+# Utils
+CONFIG_PACKAGE_ethtool-full=y
+CONFIG_PACKAGE_openssl-util=y
+CONFIG_PACKAGE_pciids=y
+CONFIG_PACKAGE_pciutils=y
+CONFIG_PACKAGE_usbids=y
+CONFIG_PACKAGE_usbutils=y
+CONFIG_PACKAGE_luci-app-ttyd=y
+
+# Performance evaluation
+CONFIG_PACKAGE_morse-wavemon=y
+CONFIG_PACKAGE_mmnlspy=y
+CONFIG_PACKAGE_luci-app-statistics=y
+CONFIG_PACKAGE_collectd-mod-conntrack=y
+CONFIG_PACKAGE_collectd-mod-ipstatistics=y
+CONFIG_PACKAGE_collectd-mod-ping=y
+CONFIG_PACKAGE_arp-scan=y
+CONFIG_PACKAGE_arp-scan-database=y
+CONFIG_IPERF_ENABLE_MULTICAST=y
+CONFIG_PACKAGE_iperf3=y
+CONFIG_PACKAGE_iperf=y
+CONFIG_PACKAGE_iptraf-ng=y
+CONFIG_PACKAGE_tcpdump=y
+
+# LTE/5G
+CONFIG_PACKAGE_dfu-util=y
+CONFIG_PACKAGE_libconfig=y
+CONFIG_PACKAGE_luci-proto-mbim=y
+CONFIG_PACKAGE_luci-proto-qmi=y
+
+# LoRA
+CONFIG_PACKAGE_sx1302_hal-tests=y
+CONFIG_PACKAGE_sx1302_hal-utils=y
+
+# WiFi
+CONFIG_PACKAGE_kmod-mt7915-firmware=y
+CONFIG_PACKAGE_kmod-mt7915e=y
+CONFIG_PACKAGE_kmod-mt7916-firmware=y
+CONFIG_PACKAGE_kmod-mac80211-hwsim=n
+
+# APP
+CONFIG_PACKAGE_mjpg-streamer=y
+CONFIG_PACKAGE_mjpg-streamer-input-uvc=y
+CONFIG_PACKAGE_mjpg-streamer-output-file=y
+CONFIG_PACKAGE_mjpg-streamer-output-http=y
+CONFIG_PACKAGE_mjpg-streamer-output-rtsp=y
+CONFIG_PACKAGE_mjpg-streamer-www=y
+CONFIG_PACKAGE_luci-app-mjpg-streamer=y
+CONFIG_PACKAGE_kmod-v4l2loopback=y
+CONFIG_PACKAGE_kmod-video-core=y
+CONFIG_PACKAGE_kmod-video-uvc=y
+CONFIG_PACKAGE_kmod-video-videobuf2=y
+CONFIG_PACKAGE_kmod-usb-storage-extras=y
+CONFIG_PACKAGE_libwebsockets-openssl=n
+
+CONFIG_PACKAGE_luci-app-mosquitto=y
+CONFIG_PACKAGE_libmosquitto-ssl=y
+CONFIG_PACKAGE_lua-mosquitto=y
+CONFIG_PACKAGE_mosquitto-ssl=y
+

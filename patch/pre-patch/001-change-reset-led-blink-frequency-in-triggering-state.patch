@@ -1,0 +1,18 @@
+--- a/package/base-files/files/etc/rc.button/reset	2024-12-18 09:59:59.864750501 +0000
++++ b/package/base-files/files/etc/rc.button/reset	2024-11-25 03:08:45.262340935 +0000
+@@ -17,11 +17,15 @@
+ released)
+ 	if [ "$SEEN" -lt 1 ]
+ 	then
++		. /etc/diag.sh
++		set_state preinit_regular
+ 		echo "REBOOT" > /dev/console
+ 		sync
+ 		reboot
+ 	elif [ "$SEEN" -ge 5 -a -n "$OVERLAY" ]
+ 	then
++		. /etc/diag.sh
++		set_state preinit_regular
+ 		echo "FACTORY RESET" > /dev/console
+ 		jffs2reset -y && reboot &
+ 	fi
