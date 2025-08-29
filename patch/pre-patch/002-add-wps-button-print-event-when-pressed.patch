@@ -1,0 +1,20 @@
+diff --git a/package/network/services/hostapd/files/wps-hotplug.sh b/package/network/services/hostapd/files/wps-hotplug.sh
+index 073bdd1868..b80d406cfc 100644
+--- a/package/network/services/hostapd/files/wps-hotplug.sh
++++ b/package/network/services/hostapd/files/wps-hotplug.sh
+@@ -1,5 +1,12 @@
+ #!/bin/sh
+ 
++case "$ACTION" in
++pressed)
++	echo "WPS Pressed" > /dev/kmsg
++	return 0
++;;
++esac
++
+ wps_catch_credentials() {
+ 	local iface ifaces ifc ifname ssid encryption key radio radios
+ 	local found=0
+-- 
+2.25.1
+
