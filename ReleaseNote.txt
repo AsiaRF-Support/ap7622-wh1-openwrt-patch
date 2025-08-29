@@ -1,3 +1,12 @@
+1.02
+	Improve the description in README.md. Using official release commit hash of SDK 2.6.6.
+	Add bluez packages for bluetooth device.
+	Add a print trigger on wps button.
+	Fix the issue that LAN/WAN mac address cannot be read.
+	Fix the missing wps button definition in dts.
+
+
+=============================================================
 1.01
 	Fix the issue that wizards apply the wrong architecture of the network on AP7622.
 	Fix the error about rtc synchronization after initializing on the web console.
