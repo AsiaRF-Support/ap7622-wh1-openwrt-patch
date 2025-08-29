@@ -1,0 +1,18 @@
+diff --git a/target/linux/mediatek/mt7622/base-files/etc/board.d/02_network b/target/linux/mediatek/mt7622/base-files/etc/board.d/02_network
+index 57fdf4f042..6af12ed485 100644
+--- a/target/linux/mediatek/mt7622/base-files/etc/board.d/02_network
++++ b/target/linux/mediatek/mt7622/base-files/etc/board.d/02_network
+@@ -60,6 +60,10 @@ mediatek_setup_macs()
+ 	local label_mac=""
+ 
+ 	case $board in
++	asiarf,ap7622-wh1)
++		lan_mac=$(mtd_get_mac_binary Factory 0x7fff4)
++		wan_mac=$(mtd_get_mac_binary Factory 0x7fffa)
++		;;
+ 	buffalo,wsr-3200ax4s)
+ 		lan_mac=$(mtd_get_mac_ascii board_data "mac")
+ 		wan_mac=$lan_mac
+-- 
+2.25.1
+
