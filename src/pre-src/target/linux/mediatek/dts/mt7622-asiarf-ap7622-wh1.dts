@@ -24,6 +24,13 @@
 
 		// Hint: Replace factory node for reset node.
 		/delete-node/ factory; // Free gpio0
+
+		wps {
+			label = "wps";
+			linux,code = <KEY_WPS_BUTTON>;
+			gpios = <&pio 102 GPIO_ACTIVE_LOW>;
+		};
+
 		reset {
 			label = "reset";
 			linux,code = <KEY_RESTART>;
@@ -51,7 +58,7 @@
 &rtc {
     status = "disabled";
 
-    /* No externel RTC clock */
+    /* No external RTC clock */
 };
 
 
