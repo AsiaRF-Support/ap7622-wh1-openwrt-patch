@@ -12,22 +12,22 @@
 3. Clone and copy this repository into openwrt directory.
 
 	```
- 	git clone https://github.com/AsiaRF-Support/ap7622-wh1-openwrt-patch.git
-	cp -r ap7622-wh1-openwrt-patch openwrt/
+ 	git clone https://github.com/AsiaRF-Support/asiarf-openwrt-halow-patch.git
+	cp -r asiarf-openwrt-halow-patch openwrt/
 	```
 
 	The structure of directory should be:
 
 	openwrt
 
-	|-- ap7622-wh1-openwrt-patch
+	|-- asiarf-openwrt-halow-patch
 
 	`-- some openwrt folders
 
-5. In openwrt/ap7622-wh1-openwrt-patch directory, execute the script.
+5. In openwrt/asiarf-openwrt-halow-patch directory, execute the script.
 
 	```
-	cd openwrt/ap7622-wh1-openwrt-patch; bash install-asiarf-ap7622.sh; cd -
+	cd openwrt/asiarf-openwrt-halow-patch; bash install-asiarf-ap7622.sh; cd ../
 	```
 
 6. The script will install and patch files, prepare the configuration,
