@@ -12,6 +12,7 @@
 
 	```
  	git clone https://github.com/AsiaRF-Support/asiarf-openwrt-halow-patch.git
+	cd asiarf-openwrt-halow-patch; git checkout acba5d44a4afef6bb9d3fc4aaea4687c6867dc37; cd -;
 	cp -r asiarf-openwrt-halow-patch openwrt/
 	```
 
