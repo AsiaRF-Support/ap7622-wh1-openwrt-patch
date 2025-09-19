@@ -11,7 +11,7 @@
 3. Clone and copy this repository into openwrt directory.
 
 	```
- 	git clone -b next https://github.com/AsiaRF-Support/asiarf-openwrt-halow-patch.git
+ 	git clone https://github.com/AsiaRF-Support/asiarf-openwrt-halow-patch.git
 	cp -r asiarf-openwrt-halow-patch openwrt/
 	```
 
