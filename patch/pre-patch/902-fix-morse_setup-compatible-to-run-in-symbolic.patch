@@ -1,0 +1,36 @@
+From c2f60e69787da9ae109ffcabd11a916cd0b40699 Mon Sep 17 00:00:00 2001
+From: Elwin Huang <s09289728096@gmail.com>
+Date: Mon, 15 Dec 2025 12:04:28 +0800
+Subject: [PATCH] script: Fix morse_setup compatible to run in symbolic link
+
+In linux, $(pwd) only read the "current working directory path" instead of "absolute path",and this is a bit tricky when the path is from a symbolic link.
+For example, we got a openwrt repo at path "/mnt/ssd_500gb/github/openwrt"
+If using "ln -s /mnt/ssd_500gb/github/openwrt ~/openwrt" to link into home directory, in path "~/openwrt," the following command will show:
+
+git rev-parse --show-toplevel	-> /mnt/ssd_500gb/github/openwrt
+echo $(pwd)						-> /home/elwin/openwrt
+echo $(readlink -f $(pwd))		-> /mnt/ssd_500gb/github/openwrt
+
+Fix this issue to read the realpath of pwd so that when running in a link, morse_setup will find the correct path.
+
+Signed-off-by: Elwin Huang <s09289728096@gmail.com>
+---
+ scripts/morse_setup.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/scripts/morse_setup.sh b/scripts/morse_setup.sh
+index 16c4b5c291..1986af2843 100755
+--- a/scripts/morse_setup.sh
++++ b/scripts/morse_setup.sh
+@@ -158,7 +158,7 @@ patch_feeds_packages(){
+ 
+ 
+ # script has to run from openwrt top
+-if [[ "$(pwd)" != "$(git rev-parse --show-toplevel)" ]]; then
++if [[ "$(readlink -f $(pwd))" != "$(git rev-parse --show-toplevel)" ]]; then
+     usage 1
+ fi
+ 
+-- 
+2.34.1
+
