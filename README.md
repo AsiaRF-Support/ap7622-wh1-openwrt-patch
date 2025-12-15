@@ -5,7 +5,7 @@
    (commit hash = 39565282fdea7a8869c001e3db6ba0446574a027)
 
 	```
-	git clone -b 2.6.6 https://github.com/MorseMicro/openwrt.git
+	git clone -b 2.9-dev https://github.com/MorseMicro/openwrt.git
 	```
 
 3. Clone and copy this repository into openwrt directory.
