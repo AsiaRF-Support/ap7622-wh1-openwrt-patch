@@ -11,7 +11,7 @@ diff -ruN a/target/linux/mediatek/image/mt7622.mk b/target/linux/mediatek/image/
 +  DEVICE_DTS := mt7622-asiarf-ap7622-wh1
 +  DEVICE_DTS_DIR := ../dts
 +  DEVICE_IMG_PREFIX := $$(DEVICE_NAME)-$$(IMG_PREFIX_VERCODE)
-+  DEVICE_PACKAGES := kmod-ata-ahci-mtk kmod-btmtkuart kmod-usb3
++  DEVICE_PACKAGES := kmod-ata-ahci-mtk kmod-btmtkuart kmod-usb3 kmod-morse netifd-morse morse-fw-6108
 +  BOARD_NAME := asiarf,ap7622-wh1
 +  UBINIZE_OPTS := -E 5
 +  BLOCKSIZE := 128k

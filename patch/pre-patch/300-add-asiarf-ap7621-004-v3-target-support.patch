@@ -22,7 +22,7 @@ index 1a8df617b5..93f9e56f78 100644
 +  DEVICE_MODEL := AP7621-004
 +  DEVICE_VARIANT := v3
 +  IMAGE_SIZE := 16000k
-+  DEVICE_PACKAGES := kmod-mmc-mt7620 kmod-usb3 -uboot-envtools
++  DEVICE_PACKAGES := kmod-mmc-mt7620 kmod-usb3 -uboot-envtools kmod-morse netifd-morse morse-fw-6108
 +  SUPPORTED_DEVICES := asiarf,ap7621-004-v3
 +endef
 +TARGET_DEVICES += asiarf_ap7621-004-v3
