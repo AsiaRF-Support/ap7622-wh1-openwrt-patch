@@ -1,6 +1,6 @@
-diff -ruN a/feeds/morse/kernel/morse-bundle/Makefile b/feeds/morse/kernel/morse-bundle/Makefile
---- a/feeds/morse/kernel/morse-bundle/Makefile	2024-12-18 11:50:01.468442904 +0000
-+++ b/feeds/morse/kernel/morse-bundle/Makefile	2024-12-18 12:30:08.779516297 +0000
+diff -ruN a/feeds/morse/hardware/morse-bundle/Makefile b/feeds/morse/hardware/morse-bundle/Makefile
+--- a/feeds/morse/hardware/morse-bundle/Makefile	2024-12-18 11:50:01.468442904 +0000
++++ b/feeds/morse/hardware/morse-bundle/Makefile	2024-12-18 12:30:08.779516297 +0000
 @@ -35,18 +35,18 @@
  define Package/morse-bundle/install
  	$(INSTALL_DIR) $(1)/etc/init.d
@@ -22,90 +22,9 @@ diff -ruN a/feeds/morse/kernel/morse-bundle/Makefile b/feeds/morse/kernel/morse-
  	$(INSTALL_BIN) ./files/etc/init.d/* $(1)/etc/init.d/.
  	$(INSTALL_BIN) ./files/etc/sysctl.d/* $(1)/etc/sysctl.d/
  endef
-diff -ruN a/feeds/morse/kernel/morse-bundle/files/etc/board.d/00_system b/feeds/morse/kernel/morse-bundle/files/etc/board.d/00_system
---- a/feeds/morse/kernel/morse-bundle/files/etc/board.d/00_system	2024-12-18 11:50:01.468442904 +0000
-+++ b/feeds/morse/kernel/morse-bundle/files/etc/board.d/00_system	1970-01-01 00:00:00.000000000 +0000
-@@ -1,30 +0,0 @@
--. /lib/functions/uci-defaults.sh
--. /lib/functions/system.sh
--
--board=$(board_name)
--
--board_config_update
--
--. /etc/device_info
--
--mac_label="$(get_mac_label)"
--if [ -z "$mac_label" ]; then
--	mac_label="$(cat /sys/class/net/eth0/address)"
--fi
--
--if [ -n "$mac_label" ]; then
--	suffix="$(echo "$mac_label" | sed 's/.*:\(..\):\(..\)$/\1\2/')"
--else
--	suffix="z$(tr -dc 'a-f0-9' </dev/urandom | head -c 3)"
--fi
--
--prefix="$DEVICE_PRODUCT"
--if [ -z "$prefix" ]; then
--	prefix="morse"
--fi
--
--ucidef_set_hostname "$(echo "$prefix-$suffix" | tr A-Z a-z | tr -d ' ')"
--
--board_config_flush
--
--exit 0
-\ No newline at end of file
-diff -ruN a/feeds/morse/kernel/morse-bundle/files/etc/uci-defaults/98-morse-wireless-defaults b/feeds/morse/kernel/morse-bundle/files/etc/uci-defaults/98-morse-wireless-defaults
---- a/feeds/morse/kernel/morse-bundle/files/etc/uci-defaults/98-morse-wireless-defaults	2024-12-18 11:50:01.468442904 +0000
-+++ b/feeds/morse/kernel/morse-bundle/files/etc/uci-defaults/98-morse-wireless-defaults	2024-12-16 08:58:13.840481908 +0000
-@@ -11,10 +11,12 @@
- . /lib/functions/system.sh
- 
- 
--default_ssid=$(uci get system.@system[0].hostname 2>/dev/null)
-+default_ssid_prefix=$(uci get system.@system[0].hostname 2>/dev/null | cut -d '-' -f 1)
-+default_ssid_suffix=$(uci get system.@system[0].hostname 2>/dev/null | cut -d '-' -f 2)
- default_wifi_key="$(persistent_vars_storage.sh READ default_wifi_key)"
- if [ -z "$default_wifi_key" ]; then
--	default_wifi_key=$(tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 8)
-+	#default_wifi_key=$(tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 8)
-+	default_wifi_key=12345678
- fi
- mm_region="$(persistent_vars_storage.sh READ mm_region)"
- 
-@@ -66,10 +68,14 @@
- 				fi
- 
- 				uci batch <<- END
--					set wireless.default_$config.ssid='$default_ssid'
--					set wireless.default_$config.mesh_id='$default_ssid'
-+					set wireless.default_$config.mode='none'
-+					set wireless.default_$config.ssid='$default_ssid_prefix-HaLow-$default_ssid_suffix'
-+					set wireless.default_$config.mesh_id='$default_ssid_prefix-HaLow-$default_ssid_suffix'
- 					set wireless.default_$config.key='$default_wifi_key'
- 					set wireless.default_$config.encryption='sae'
-+					set wireless.default_$config.max_inactivity='300'
-+					set wireless.default_$config.dtim_period='1'
-+					set wireless.default_$config.ieee80211w='2'
- 				END
- 		fi
- 	else
-@@ -83,8 +89,8 @@
- 				uci batch <<- END
- 					delete wireless.$config.disabled
- 					set wireless.$config.country='$mm_region'
--					set wireless.default_$config.ssid='$default_ssid'
--					set wireless.default_$config.mesh_id='$default_ssid'
-+					set wireless.default_$config.ssid='$default_ssid_prefix-WiFi-$default_ssid_suffix'
-+					set wireless.default_$config.mesh_id='$default_ssid_prefix-WiFi-$default_ssid_suffix'
- 					set wireless.default_$config.key='$default_wifi_key'
- 					set wireless.default_$config.encryption='psk2'
- 				END
-diff -ruN a/feeds/morse/kernel/morse-bundle/files/etc/uci-defaults-asiarf/86-wan b/feeds/morse/kernel/morse-bundle/files/etc/uci-defaults-asiarf/86-wan
---- a/feeds/morse/kernel/morse-bundle/files/etc/uci-defaults-asiarf/86-wan	1970-01-01 00:00:00.000000000 +0000
-+++ b/feeds/morse/kernel/morse-bundle/files/etc/uci-defaults-asiarf/86-wan	2024-12-18 12:30:58.764328704 +0000
+diff -ruN a/feeds/morse/hardware/morse-bundle/files/etc/uci-defaults-asiarf/86-wan b/feeds/morse/hardware/morse-bundle/files/etc/uci-defaults-asiarf/86-wan
+--- a/feeds/morse/hardware/morse-bundle/files/etc/uci-defaults-asiarf/86-wan	1970-01-01 00:00:00.000000000 +0000
++++ b/feeds/morse/hardware/morse-bundle/files/etc/uci-defaults-asiarf/86-wan	2024-12-18 12:30:58.764328704 +0000
 @@ -0,0 +1,6 @@
 +#!/bin/sh
 +
@@ -113,9 +32,9 @@ diff -ruN a/feeds/morse/kernel/morse-bundle/files/etc/uci-defaults-asiarf/86-wan
 +uci set network.wan.proto="dhcp"
 +uci commit network
 +
-diff -ruN a/feeds/morse/kernel/morse-bundle/files/etc/uci-defaults-asiarf/90-asiarf-system-defaults b/feeds/morse/kernel/morse-bundle/files/etc/uci-defaults-asiarf/90-asiarf-system-defaults
---- a/feeds/morse/kernel/morse-bundle/files/etc/uci-defaults-asiarf/90-asiarf-system-defaults	1970-01-01 00:00:00.000000000 +0000
-+++ b/feeds/morse/kernel/morse-bundle/files/etc/uci-defaults-asiarf/90-asiarf-system-defaults	2024-11-26 08:07:18.644402078 +0000
+diff -ruN a/feeds/morse/hardware/morse-bundle/files/etc/uci-defaults-asiarf/90-asiarf-system-defaults b/feeds/morse/hardware/morse-bundle/files/etc/uci-defaults-asiarf/90-asiarf-system-defaults
+--- a/feeds/morse/hardware/morse-bundle/files/etc/uci-defaults-asiarf/90-asiarf-system-defaults	1970-01-01 00:00:00.000000000 +0000
++++ b/feeds/morse/hardware/morse-bundle/files/etc/uci-defaults-asiarf/90-asiarf-system-defaults	2024-11-26 08:07:18.644402078 +0000
 @@ -0,0 +1,16 @@
 +#!/bin/sh
 +

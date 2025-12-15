@@ -1,0 +1,17 @@
+diff --git a/feeds/morse/essentials/netifd-morse/lib/wifi/morse.sh b/feeds/morse/essentials/netifd-morse/lib/wifi/morse.sh
+--- a/feeds/morse/essentials/netifd-morse/lib/wifi/morse.sh
++++ b/feeds/morse/essentials/netifd-morse/lib/wifi/morse.sh
+@@ -116,6 +116,10 @@ EOF
+ 				morse,halowlink2)
+ 					bcf=bcf_mf15457.bin
+ 				;;
++				asiarf,ap7622-wh1|\
++				asiarf,ap7621-004-v3)
++					bcf=arfhl_d1164_bcf_mf10220_us_v1.bin
++				;;
+ 				*)
+ 					if [[ $path  = *usb* ]]; then
+ 						bcf=bcf_mf15457.bin
+-- 
+2.34.1
+
