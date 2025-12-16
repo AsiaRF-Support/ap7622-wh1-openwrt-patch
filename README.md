@@ -1,6 +1,6 @@
 **How to use:**
 
-1. Clone OpenWrt from morse micro's code base. We specify the version of SDK v2.6.6
+1. Clone OpenWrt from morse micro's code base. We specify the version of SDK v2.9.2
 
    (commit hash = 39565282fdea7a8869c001e3db6ba0446574a027)
 
@@ -11,7 +11,7 @@
 3. Clone and copy this repository into openwrt directory.
 
 	```
- 	git clone -b v1.03 https://github.com/AsiaRF-Support/asiarf-openwrt-halow-patch.git
+ 	git clone -b v1.04 https://github.com/AsiaRF-Support/asiarf-openwrt-halow-patch.git
 	cp -r asiarf-openwrt-halow-patch openwrt/
 	```
 
