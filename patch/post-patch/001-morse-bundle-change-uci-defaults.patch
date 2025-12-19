@@ -42,7 +42,7 @@ diff -ruN a/feeds/morse/hardware/morse-bundle/files/etc/uci-defaults-asiarf/90-a
 +
 +for _dev in /sys/class/ieee80211/*; do
 +    [ -e "$_dev" ] || continue
-+    basename "$(readlink -f "$_dev/device/driver/")" | grep 'wmac' || continue
++    #basename "$(readlink -f "$_dev/device/driver/")" | grep 'wmac' || continue
 +
 +    PREFIX="${DEVICE_MANUFACTURER:-AsiaRF}"
 +    SUFFIX="$(cat $_dev/macaddress | tr '[a-z]' '[A-Z]' | cut -d ':' -f 5,6 | sed 's/://g')"

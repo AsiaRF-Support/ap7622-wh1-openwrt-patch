@@ -54,7 +54,7 @@ diff --git a/target/linux/bcm27xx/image/cmdline.txt b/target/linux/bcm27xx/image
 +++ b/target/linux/bcm27xx/image/cmdline.txt
 @@ -1 +1 @@
 -console=serial0 console=ttyUSB0,115200 console=tty1 root=/dev/mmcblk0p2 rootfstype=squashfs,ext4 rootwait
-+console=serial0 console=ttyUSB0,115200 console=ttyAMA0,115200 console=tty1 root=/dev/mmcblk0p2 rootfstype=squashfs,ext4 rootwait modules-load=dwc2,g_ncm
++console=serial0 console=ttyUSB0,115200 console=ttyAMA0,115200 console=tty1 root=/dev/mmcblk0p2 rootfstype=squashfs,ext4 rootwait
 -- 
 2.34.1
 
