@@ -35,7 +35,7 @@
    | <empty>    | initialize only without setting up target platform |
    | ap7622-wh1 | ap7622-wh1 with integrated mm610x chip |
    | ap7621-004 | ap7621-004 with mm610x-cs1 card installed |
-   | mm610x-h06-spi-and-sdio | Raspberry4 + MM610X-H06 HAT |
+   | raspberrypi4 | Raspberry Pi 4 + mm610x-h06 HAT |
     ------------------------
 
 7. The script will install and patch files, prepare the configuration,

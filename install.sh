@@ -27,6 +27,7 @@ usage() {
     echo "Support platform:"
 	echo "	ap7622-wh1"
 	echo "	ap7621-004"
+	echo "	raspberrypi4"
 	echo "	<empty> for initialize only."
     exit 1
 }
