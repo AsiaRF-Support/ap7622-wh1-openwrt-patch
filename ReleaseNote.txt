@@ -1,18 +1,26 @@
-1.02
+v1.04
+	Bump Morse Micro SDK version to 2.9.3
+	Add platform support Raspberry Pi 4 (+MM610X-H06 HAT)
+
+=============================================================
+v1.03
+	Add platform AP7621-004.
+	User friendly improvement.
+
+=============================================================
+v1.02
 	Improve the description in README.md. Using official release commit hash of SDK 2.6.6.
 	Add bluez packages for bluetooth device.
 	Add a print trigger on wps button.
 	Fix the issue that LAN/WAN mac address cannot be read.
 	Fix the missing wps button definition in dts.
 
-
 =============================================================
-1.01
+v1.01
 	Fix the issue that wizards apply the wrong architecture of the network on AP7622.
 	Fix the error about rtc synchronization after initializing on the web console.
 
-
 =============================================================
-1.00
+v1.00
 	First release of AP7622-WH1 platform for Morse Micro OpenWrt SDK.
 
