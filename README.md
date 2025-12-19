@@ -1,8 +1,8 @@
 **How to use:**
 
-1. Clone OpenWrt from morse micro's code base. We specify the version of SDK v2.9.2
+1. Clone OpenWrt from morse micro's code base. We specify the version of SDK v2.9.3
 
-   (commit hash = 39565282fdea7a8869c001e3db6ba0446574a027)
+   (commit hash = b077cd4a1a80184cdd61c54545a89e7e4064002d)
 
 	```
 	git clone -b 2.9-dev https://github.com/MorseMicro/openwrt.git
@@ -35,6 +35,7 @@
    | <empty>    | initialize only without setting up target platform |
    | ap7622-wh1 | ap7622-wh1 with integrated mm610x chip |
    | ap7621-004 | ap7621-004 with mm610x-cs1 card installed |
+   | mm610x-h06-spi-and-sdio | Raspberry4 + MM610X-H06 HAT |
     ------------------------
 
 7. The script will install and patch files, prepare the configuration,
