@@ -1,0 +1,134 @@
+diff --git a/target/linux/bcm27xx/image/Makefile b/target/linux/bcm27xx/image/Makefile
+--- a/target/linux/bcm27xx/image/Makefile
++++ b/target/linux/bcm27xx/image/Makefile
+@@ -65,6 +65,12 @@ define Build/boot-ekh01
+ 
+ endef
+ 
++define Build/boot-mm610x
++    echo -e '\ndtoverlay=sysinfo,board-name="$(SYSINFO_BOARD_NAME)",model="$(SYSINFO_MODEL)"' | cat boards/mm610x-h06/distroconfig.txt boards/mm610x-h06/distroconfig-$(DISTROCONFIG_EXTRA).txt - | mcopy -o -i $@.boot - ::/distroconfig.txt
++
++endef
++
++
+ define Build/sdcard-img
+ 	./gen_rpi_sdcard_img.sh $@ $@.boot $(IMAGE_ROOTFS) \
+ 		$(CONFIG_TARGET_KERNEL_PARTSIZE) $(CONFIG_TARGET_ROOTFS_PARTSIZE)
+@@ -219,6 +225,21 @@ define Device/morse_ekh01_base
+   IMAGE/factory.img.gz := boot-common | boot-2711 | boot-ekh01 | sdcard-img | gzip
+ endef
+ 
++define Device/asiarf_mm610x_base
++  $(Device/rpi-4)
++  SYSINFO_BOARD_NAME := $(subst _,$(comma),$(1))
++  SUPPORTED_DEVICES := $$(SYSINFO_BOARD_NAME)
++  DEVICE_VENDOR := AsiaRF
++  # remove the factory image (causes confusion)
++  IMAGES := sysupgrade.img.gz
++  # Simplify by removing board and OpenWRT version.
++  IMAGE_PREFIX = $$(VERSION_DIST_SANITIZED)-$$(IMG_PREFIX_VERCODE)$$(IMG_PREFIX_EXTRA)$$(call sanitize,$$(DEVICE_MODEL)-$$(DEVICE_VARIANT))
++  DEVICE_IMG_NAME = $$(IMAGE_PREFIX)-$$(1)-$$(2)
++  DEVICE_PACKAGES += kmod-morse netifd-morse morse-fw-6108
++  IMAGE/sysupgrade.img.gz := boot-common | boot-2711 | boot-mm610x | sdcard-img | gzip | append-metadata
++  IMAGE/factory.img.gz := boot-common | boot-2711 | boot-mm610x | sdcard-img | gzip
++endef
++
+ define Device/morse_mmx108-ekh01-sdio
+   $(Device/morse_ekh01_base)
+   DEVICE_MODEL := MMx108-EKH01
+@@ -261,4 +282,17 @@ ifeq ($(SUBTARGET),bcm2711)
+   TARGET_DEVICES += morse_mm6108-ekh01-spi
+ endif
+ 
++define Device/asiarf_mm610x-h06-spi-and-sdio
++  $(Device/asiarf_mm610x_base)
++  DEVICE_MODEL := MM610X-H06
++  DEVICE_VARIANT := SPI and SDIO
++  SYSINFO_MODEL := $$(DEVICE_VENDOR) $$(DEVICE_MODEL) ($$(DEVICE_VARIANT))
++  SUPPORTED_DEVICES += asiarf,mm610x-h06
++  DISTROCONFIG_EXTRA := mm610x-spi-and-sdio
++endef
++ifeq ($(SUBTARGET),bcm2711)
++  TARGET_DEVICES += asiarf_mm610x-h06-spi-and-sdio
++endif
++
++
+ $(eval $(call BuildImage))
+diff --git a/target/linux/bcm27xx/image/boards/mm610x-h06/distroconfig-mm610x-spi-and-sdio.txt b/target/linux/bcm27xx/image/boards/mm610x-h06/distroconfig-mm610x-spi-and-sdio.txt
+new file mode 100644
+--- /dev/null
++++ b/target/linux/bcm27xx/image/boards/mm610x-h06/distroconfig-mm610x-spi-and-sdio.txt
+@@ -0,0 +1,8 @@
++dtoverlay=morse-ps
++dtoverlay=sdio,poll_once=on
++#setup sub 50MHz SDIO clock
++dtparam=sdio_overclock=42
++dtoverlay=mm_wlan
++dtoverlay=morse-ps
++dtparam=spi=on
++dtoverlay=mm810x-spi
+diff --git a/target/linux/bcm27xx/image/boards/mm610x-h06/distroconfig-mm610x-spi.txt b/target/linux/bcm27xx/image/boards/mm610x-h06/distroconfig-mm610x-spi.txt
+new file mode 100644
+--- /dev/null
++++ b/target/linux/bcm27xx/image/boards/mm610x-h06/distroconfig-mm610x-spi.txt
+@@ -0,0 +1,3 @@
++dtoverlay=morse-ps
++dtparam=spi=on
++dtoverlay=mm610x-spi
+diff --git a/target/linux/bcm27xx/image/boards/mm610x-h06/distroconfig-mmx10x-sdio.txt b/target/linux/bcm27xx/image/boards/mm610x-h06/distroconfig-mmx10x-sdio.txt
+new file mode 100644
+--- /dev/null
++++ b/target/linux/bcm27xx/image/boards/mm610x-h06/distroconfig-mmx10x-sdio.txt
+@@ -0,0 +1,5 @@
++dtoverlay=morse-ps
++dtoverlay=sdio,poll_once=on
++#setup sub 50MHz SDIO clock
++dtparam=sdio_overclock=42
++dtoverlay=mm_wlan
+diff --git a/target/linux/bcm27xx/image/boards/mm610x-h06/distroconfig.txt b/target/linux/bcm27xx/image/boards/mm610x-h06/distroconfig.txt
+new file mode 100644
+--- /dev/null
++++ b/target/linux/bcm27xx/image/boards/mm610x-h06/distroconfig.txt
+@@ -0,0 +1,39 @@
++################################################################################
++# Bootloader configuration - distroconfig.txt
++################################################################################
++
++# Restore PL011 (ttyAMA0) to GPIOs 14 & 15, instead of Mini UART (ttyS0).
++# Mini UART is disabled by default unless "enable_uart=1" is specified,
++#  which changes the core frequency to a fixed value and impacts performance.
++# See https://www.raspberrypi.com/documentation/computers/configuration.html#mini-uart-and-cpu-core-frequency
++[pi0w]
++dtoverlay=disable-bt
++[pi3]
++dtoverlay=disable-bt
++[pi4]
++dtoverlay=miniuart-bt
++
++[all]
++# Disable overscan assuming the display supports displaying the full resolution
++# If the text shown on the screen disappears off the edge, comment this out
++disable_overscan=1
++
++# How much memory in MB to assign to the GPU on Pi models having
++# 256, 512 or 1024 MB total memory
++gpu_mem_256=128
++gpu_mem_512=128
++gpu_mem_1024=128
++
++uart_enable=1
++
++dtoverlay=uart5
++
++#disable SD activity LED by default
++#(we configure it for HaLow later in userspace)
++dtparam=act_led_trigger=none
++
++#adds ramoops device tree overlay
++dtoverlay=ramoops
++
++# automatically load sensor dtoverlays
++camera_auto_detect=1
+-- 
+2.34.1
+

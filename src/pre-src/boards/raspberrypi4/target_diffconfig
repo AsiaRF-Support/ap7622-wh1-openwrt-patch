@@ -1,0 +1,62 @@
+CONFIG_TARGET_MULTI_PROFILE=y
+CONFIG_TARGET_bcm27xx=y
+CONFIG_TARGET_bcm27xx_bcm2711=y
+CONFIG_TARGET_DEVICE_bcm27xx_bcm2711_DEVICE_asiarf_mm610x-h06-spi-and-sdio=y
+CONFIG_VERSION_MANUFACTURER="AsiaRF"
+CONFIG_VERSION_MANUFACTURER_URL="https://asiarf.com/"
+CONFIG_VERSION_DIST="MM610x-H06"
+CONFIG_VERSION_NUMBER="v2.9-dev"
+CONFIG_VERSION_CODE=""
+CONFIG_VERSION_HWREV="v0"
+CONFIG_VERSION_PRODUCT="ARFHL"
+
+CONFIG_TARGET_ROOTFS_PARTSIZE=300
+
+# Morse driver
+CONFIG_PACKAGE_morsectrl=y
+CONFIG_PACKAGE_morse-fw-6108-tlm=y
+CONFIG_PACKAGE_luci=y
+CONFIG_PACKAGE_luci-app-ekhwizards=y
+CONFIG_MORSE_SDIO_ALIGNMENT=8
+
+
+# Video encode/decode
+CONFIG_PACKAGE_kmod-video-core=y
+CONFIG_PACKAGE_kmod-video-codec-bcm2835=y
+
+# Enabling CONFIG_ALL_KMODS triggered a package installation
+# bug with lan78xx - enabled by default for rpi4 platforms.
+# We enable of-mdio to work around the dependency chain.
+CONFIG_PACKAGE_kmod-of-mdio=y
+
+# USB support
+CONFIG_PACKAGE_kmod-usb-dwc2=y
+CONFIG_PACKAGE_kmod-usb-net-cdc-ncm=y
+
+# Utils
+CONFIG_PACKAGE_ethtool-full=y
+CONFIG_PACKAGE_openssl-util=y
+CONFIG_PACKAGE_pciids=y
+CONFIG_PACKAGE_pciutils=y
+CONFIG_PACKAGE_usbids=y
+CONFIG_PACKAGE_usbutils=y
+CONFIG_BUSYBOX_CONFIG_LSUSB=n
+CONFIG_BUSYBOX_CONFIG_LSPCI=n
+CONFIG_PACKAGE_luci-app-ttyd=y
+
+# Performance evaluation
+CONFIG_PACKAGE_morse-wavemon=y
+CONFIG_PACKAGE_mmnlspy=y
+CONFIG_PACKAGE_luci-app-statistics=y
+CONFIG_PACKAGE_collectd-mod-conntrack=y
+CONFIG_PACKAGE_collectd-mod-ipstatistics=y
+CONFIG_PACKAGE_collectd-mod-ping=y
+CONFIG_PACKAGE_arp-scan=y
+CONFIG_PACKAGE_arp-scan-database=y
+CONFIG_IPERF_ENABLE_MULTICAST=y
+CONFIG_PACKAGE_iperf3=y
+CONFIG_PACKAGE_iperf=y
+CONFIG_PACKAGE_iptraf-ng=y
+CONFIG_PACKAGE_tcpdump=y
+
+
